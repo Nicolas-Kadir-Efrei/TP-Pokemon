@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon API Tester</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pokémon API Tester</h1>
+            <p>Interface de test pour l'API Pokémon</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="setup">Configuration</button>
+            <button class="tab-btn" data-tab="pokemon">Pokémon</button>
+            <button class="tab-btn" data-tab="attacks">Attaques</button>
+            <button class="tab-btn" data-tab="trainers">Dresseurs</button>
+            <button class="tab-btn" data-tab="battles">Combats</button>
+            <button class="tab-btn" data-tab="logs">Logs</button>
+        </div>
+
+        <div class="tab-content active" id="setup">
+            <h2>Configuration initiale</h2>
+            <button id="init-db" class="btn">Initialiser la base de données</button>
+            <div class="status-container">
+                <h3>Statut</h3>
+                <div class="status">
+                    <p><strong>Attaques:</strong> <span id="attacks-status">0</span> créées</p>
+                    <p><strong>Pokémon:</strong> <span id="pokemon-status">0</span> créés</p>
+                    <p><strong>Dresseurs:</strong> <span id="trainers-status">0</span> créés</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="pokemon">
+            <h2>Gestion des Pokémon</h2>
+            
+            <div class="card">
+                <h3>Créer un Pokémon</h3>
+                <div class="form-group">
+                    <label for="pokemon-name">Nom:</label>
+                    <input type="text" id="pokemon-name" placeholder="Ex: Pikachu">
+                </div>
+                <div class="form-group">
+                    <label for="pokemon-life">Points de vie:</label>
+                    <input type="number" id="pokemon-life" placeholder="Ex: 100">
+                </div>
+                <button id="create-pokemon" class="btn">Créer</button>
+            </div>
+
+            <div class="card">
+                <h3>Ajouter une attaque à un Pokémon</h3>
+                <div class="form-group">
+                    <label for="pokemon-select">Pokémon:</label>
+                    <select id="pokemon-select">
+                        <option value="">Sélectionner un Pokémon</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="attack-select">Attaque:</label>
+                    <select id="attack-select">
+                        <option value="">Sélectionner une attaque</option>
+                    </select>
+                </div>
+                <button id="add-attack" class="btn">Ajouter</button>
+            </div>
+
+            <div class="card">
+                <h3>Soigner un Pokémon</h3>
+                <div class="form-group">
+                    <label for="heal-pokemon-select">Pokémon:</label>
+                    <select id="heal-pokemon-select">
+                        <option value="">Sélectionner un Pokémon</option>
+                    </select>
+                </div>
+                <button id="heal-pokemon" class="btn">Soigner</button>
+            </div>
+
+            <div class="card">
+                <h3>Liste des Pokémon</h3>
+                <button id="refresh-pokemon" class="btn">Rafraîchir</button>
+                <div id="pokemon-list" class="list-container"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="attacks">
+            <h2>Gestion des Attaques</h2>
+            
+            <div class="card">
+                <h3>Créer une attaque</h3>
+                <div class="form-group">
+                    <label for="attack-name">Nom:</label>
+                    <input type="text" id="attack-name" placeholder="Ex: Éclair">
+                </div>
+                <div class="form-group">
+                    <label for="attack-damage">Dégâts:</label>
+                    <input type="number" id="attack-damage" placeholder="Ex: 20">
+                </div>
+                <div class="form-group">
+                    <label for="attack-limit">Limite d'usage:</label>
+                    <input type="number" id="attack-limit" placeholder="Ex: 10">
+                </div>
+                <button id="create-attack" class="btn">Créer</button>
+            </div>
+
+            <div class="card">
+                <h3>Liste des Attaques</h3>
+                <button id="refresh-attacks" class="btn">Rafraîchir</button>
+                <div id="attacks-list" class="list-container"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="trainers">
+            <h2>Gestion des Dresseurs</h2>
+            
+            <div class="card">
+                <h3>Créer un dresseur</h3>
+                <div class="form-group">
+                    <label for="trainer-name">Nom:</label>
+                    <input type="text" id="trainer-name" placeholder="Ex: Sacha">
+                </div>
+                <button id="create-trainer" class="btn">Créer</button>
+            </div>
+
+            <div class="card">
+                <h3>Ajouter un Pokémon à un dresseur</h3>
+                <div class="form-group">
+                    <label for="trainer-select">Dresseur:</label>
+                    <select id="trainer-select">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="trainer-pokemon-select">Pokémon:</label>
+                    <select id="trainer-pokemon-select">
+                        <option value="">Sélectionner un Pokémon</option>
+                    </select>
+                </div>
+                <button id="add-pokemon" class="btn">Ajouter</button>
+            </div>
+
+            <div class="card">
+                <h3>Soigner tous les Pokémon d'un dresseur</h3>
+                <div class="form-group">
+                    <label for="heal-trainer-select">Dresseur:</label>
+                    <select id="heal-trainer-select">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <button id="heal-trainer-pokemon" class="btn">Soigner</button>
+            </div>
+
+            <div class="card">
+                <h3>Gagner de l'expérience</h3>
+                <div class="form-group">
+                    <label for="exp-trainer-select">Dresseur:</label>
+                    <select id="exp-trainer-select">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exp-amount">Montant:</label>
+                    <input type="number" id="exp-amount" placeholder="Ex: 5">
+                </div>
+                <button id="gain-exp" class="btn">Gagner</button>
+            </div>
+
+            <div class="card">
+                <h3>Liste des Dresseurs</h3>
+                <button id="refresh-trainers" class="btn">Rafraîchir</button>
+                <div id="trainers-list" class="list-container"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="battles">
+            <h2>Combats</h2>
+            
+            <div class="card">
+                <h3>Défi aléatoire</h3>
+                <div class="form-group">
+                    <label for="random-trainer1">Dresseur 1:</label>
+                    <select id="random-trainer1">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="random-trainer2">Dresseur 2:</label>
+                    <select id="random-trainer2">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <button id="random-battle" class="btn">Combattre</button>
+            </div>
+
+            <div class="card">
+                <h3>Défi déterministe</h3>
+                <div class="form-group">
+                    <label for="deterministic-trainer1">Dresseur 1:</label>
+                    <select id="deterministic-trainer1">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deterministic-trainer2">Dresseur 2:</label>
+                    <select id="deterministic-trainer2">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <button id="deterministic-battle" class="btn">Combattre</button>
+            </div>
+
+            <div class="card">
+                <h3>Arène 1 (100 combats aléatoires)</h3>
+                <div class="form-group">
+                    <label for="arena1-trainer1">Dresseur 1:</label>
+                    <select id="arena1-trainer1">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="arena1-trainer2">Dresseur 2:</label>
+                    <select id="arena1-trainer2">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <button id="arena1-battle" class="btn">Combattre</button>
+            </div>
+
+            <div class="card">
+                <h3>Arène 2 (100 combats déterministes)</h3>
+                <div class="form-group">
+                    <label for="arena2-trainer1">Dresseur 1:</label>
+                    <select id="arena2-trainer1">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="arena2-trainer2">Dresseur 2:</label>
+                    <select id="arena2-trainer2">
+                        <option value="">Sélectionner un dresseur</option>
+                    </select>
+                </div>
+                <button id="arena2-battle" class="btn">Combattre</button>
+            </div>
+
+            <div class="card">
+                <h3>Résultat du dernier combat</h3>
+                <div id="battle-result" class="result-container">
+                    <p>Aucun combat effectué</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="logs">
+            <h2>Logs</h2>
+            <button id="clear-logs" class="btn">Effacer les logs</button>
+            <div id="log-container" class="log-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
